@@ -1,4 +1,4 @@
-import { GET_CONTACTS, DELETE_CONTACT, ADD_CONTACT } from './types';
+import { GET_CONTACTS, DELETE_CONTACT, ADD_CONTACT, GET_CONTACT, UDPATE_CONTACT } from './types';
 import axios from 'axios'
 
 export const getContacts = () => async dispatch => {
@@ -11,6 +11,18 @@ export const getContacts = () => async dispatch => {
     });
 };
 
+
+export const getContact = (id) => async dispatch => {
+    const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
+
+
+    dispatch({
+        type: GET_CONTACT,
+        payload: res.data
+    });
+};
+
+//try catch statement below exists only because we are using fake REST API data from jsonplaceholder, as such we cannot actually a post a new contact to their database. Since it cannot not be actually posted, only faked, it cannot be deleted in a straighforward way.
 export const deleteContact = id => async dispatch => {
     try {
         await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
